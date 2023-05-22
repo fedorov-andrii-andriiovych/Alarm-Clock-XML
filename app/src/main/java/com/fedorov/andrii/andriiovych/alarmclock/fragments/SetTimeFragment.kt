@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -43,28 +44,28 @@ class SetTimeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addButton.setOnClickListener { addAlarm() }
         binding.cancelButton.setOnClickListener { toMainFragment() }
-        binding.hourEditText.addTextChangedListener(object :TextWatcher{
+        binding.hourEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(text: Editable?) {
                 val input = text.toString()
-                if (input.isNotEmpty()){
+                if (input.isNotEmpty()) {
                     val hour = input.toInt()
-                    if (hour > 23){
+                    if (hour > 23) {
                         binding.hourEditText.setText("23")
                         binding.hourEditText.setSelection(input.length)
                     }
                 }
             }
         })
-        binding.minuteEditText.addTextChangedListener(object :TextWatcher{
+        binding.minuteEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(text: Editable?) {
                 val input = text.toString()
-                if (input.isNotEmpty()){
+                if (input.isNotEmpty()) {
                     val hour = input.toInt()
-                    if (hour > 59){
+                    if (hour > 59) {
                         binding.minuteEditText.setText("59")
                         binding.minuteEditText.setSelection(input.length)
                     }
@@ -72,8 +73,8 @@ class SetTimeFragment : Fragment() {
             }
 
         })
-        mainViewModel.alarmId.observe(viewLifecycleOwner){id->
-            setAlarm(calendar.timeInMillis,id)
+        mainViewModel.alarmId.observe(viewLifecycleOwner) { id ->
+            setAlarm(calendar.timeInMillis, id)
         }
     }
 
@@ -81,7 +82,7 @@ class SetTimeFragment : Fragment() {
         val hours = binding.hourEditText.text.toString().toInt()
         val minutes = binding.minuteEditText.text.toString().toInt()
         val description = binding.descriptionEditText.text.toString()
-         calendar = Calendar.getInstance()
+        calendar = Calendar.getInstance()
         calendar.set(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -99,10 +100,20 @@ class SetTimeFragment : Fragment() {
             )
         )
     }
-    private fun setAlarm(time:Long,id:Long) {
+
+    private fun setAlarm(time: Long, id: Long) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), MyAlarm::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), id.toInt(), intent, 0)
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            id.toInt(),
+            intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+        )
         alarmManager.setRepeating(
             AlarmManager.RTC,
             time,

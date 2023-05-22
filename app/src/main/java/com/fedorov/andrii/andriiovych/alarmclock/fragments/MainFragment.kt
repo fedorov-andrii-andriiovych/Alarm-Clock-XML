@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ class MainFragment : Fragment() {
             override fun onAlarmDelete(alarmModel: AlarmModel) {
                 deleteAlarm(alarmModel)
             }
+
             override fun onSwitchClicked(alarmModel: AlarmModel) {
                 viewModel.update(alarmModel.copy(isChecked = !alarmModel.isChecked))
             }
@@ -47,13 +49,23 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    fun deleteAlarm(alarmModel: AlarmModel){
+    fun deleteAlarm(alarmModel: AlarmModel) {
         val alertDialogBuilder = AlertDialog.Builder(context)
         alertDialogBuilder.setTitle("Вы точно хотите удалить?")
         alertDialogBuilder.setPositiveButton("Да") { dialog, _ ->
-            val alarmManager =  requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmManager =
+                requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, MyAlarm::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(context, alarmModel.id, intent, 0)
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                alarmModel.id,
+                intent,
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                } else {
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                }
+            )
             alarmManager.cancel(pendingIntent)
             pendingIntent.cancel()
             viewModel.delete(alarmModel)
