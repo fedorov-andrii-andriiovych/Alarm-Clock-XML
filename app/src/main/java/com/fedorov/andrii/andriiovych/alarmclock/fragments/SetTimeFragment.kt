@@ -14,15 +14,16 @@ import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModelModelFa
 
 
 class SetTimeFragment : Fragment() {
-        lateinit var mainViewModel: MainViewModel
-        lateinit var binding: FragmentSetTimeBinding
+    lateinit var mainViewModel: MainViewModel
+    lateinit var binding: FragmentSetTimeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mainViewModel = ViewModelProvider(this,MainViewModelModelFactory())[MainViewModel::class.java]
-        binding = FragmentSetTimeBinding.inflate(inflater,container,false)
+        mainViewModel =
+            ViewModelProvider(this, MainViewModelModelFactory())[MainViewModel::class.java]
+        binding = FragmentSetTimeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -30,18 +31,25 @@ class SetTimeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addButton.setOnClickListener { addAlarm() }
-        binding.cancelButton.setOnClickListener { toMainFragment()  }
+        binding.cancelButton.setOnClickListener { toMainFragment() }
     }
 
     private fun addAlarm() {
-        val hours = binding.hourEditText.text.toString()
-        val minutes = binding.minuteEditText.text.toString()
+        val hours = binding.hourEditText.text.toString().toInt()
+        val minutes = binding.minuteEditText.text.toString().toInt()
         val description = binding.descriptionEditText.text.toString()
-        mainViewModel.insert(AlarmModel(time = "$hours:$minutes", description = description, isChecked = true))
+        mainViewModel.insert(
+            AlarmModel(
+                hours = hours,
+                minutes = minutes,
+                description = description,
+                isChecked = true
+            )
+        )
         toMainFragment()
     }
 
-    fun toMainFragment(){
+    fun toMainFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
 

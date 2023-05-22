@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class AlarmModel(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    var time: String,
+    var hours: Int,
+    var minutes: Int,
     val description:String,
     val isChecked:Boolean
 ) {

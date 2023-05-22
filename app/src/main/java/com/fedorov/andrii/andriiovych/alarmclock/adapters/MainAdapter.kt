@@ -58,7 +58,8 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
                     alarmActionListener.onSwitchClicked(alarm)
                 }
             }
-            timeTextView.text = alarm.time
+            val time = "${alarm.hours}:${alarm.minutes}"
+            timeTextView.text = time
             descriptionTextView.text = alarm.description
             switchIsChecked.isChecked = alarm.isChecked
         }
