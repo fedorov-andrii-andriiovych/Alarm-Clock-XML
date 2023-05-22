@@ -10,7 +10,7 @@ interface AlarmDao {
     fun getAll(): LiveData<List<AlarmModel>>
 
     @Insert
-    suspend fun insert(alarmModel: AlarmModel)
+    suspend fun insert(alarmModel: AlarmModel) : Long
 
     @Update
     suspend fun update(alarmModel: AlarmModel)

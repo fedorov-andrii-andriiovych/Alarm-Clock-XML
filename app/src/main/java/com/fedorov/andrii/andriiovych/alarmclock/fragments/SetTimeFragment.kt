@@ -26,6 +26,7 @@ import java.util.Calendar
 class SetTimeFragment : Fragment() {
     lateinit var mainViewModel: MainViewModel
     lateinit var binding: FragmentSetTimeBinding
+    lateinit var calendar: Calendar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,13 +72,16 @@ class SetTimeFragment : Fragment() {
             }
 
         })
+        mainViewModel.alarmId.observe(viewLifecycleOwner){id->
+            setAlarm(calendar.timeInMillis,id)
+        }
     }
 
     private fun addAlarm() {
         val hours = binding.hourEditText.text.toString().toInt()
         val minutes = binding.minuteEditText.text.toString().toInt()
         val description = binding.descriptionEditText.text.toString()
-        val calendar = Calendar.getInstance()
+         calendar = Calendar.getInstance()
         calendar.set(
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -94,21 +98,19 @@ class SetTimeFragment : Fragment() {
                 isChecked = true
             )
         )
-        setAlarm(calendar.timeInMillis)
-      //  toMainFragment()
     }
-
-    private fun setAlarm(time:Long) {
+    private fun setAlarm(time:Long,id:Long) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), MyAlarm::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
+        val pendingIntent = PendingIntent.getBroadcast(requireContext(), id.toInt(), intent, 0)
         alarmManager.setRepeating(
             AlarmManager.RTC,
             time,
-            AlarmManager.INTERVAL_DAY,
+            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
             pendingIntent
         )
         Toast.makeText(requireContext(), "Будильник установлен", Toast.LENGTH_SHORT).show()
+        toMainFragment()
     }
 
     fun toMainFragment() {

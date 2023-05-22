@@ -11,8 +11,8 @@ class DatabaseRepository(val database: AppDatabase = App.instance.getDatabase())
         return database.alarmDao().getAll()
     }
 
-    suspend fun insert(alarmModel: AlarmModel) {
-        database.alarmDao().insert(alarmModel)
+    suspend fun insert(alarmModel: AlarmModel):Long {
+      return  database.alarmDao().insert(alarmModel)
     }
 
     suspend fun update(alarmModel: AlarmModel) {

@@ -1,6 +1,7 @@
 package com.fedorov.andrii.andriiovych.alarmclock.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -24,12 +25,16 @@ class MainViewModelModelFactory(
 class MainViewModel(private val databaseRepository: DatabaseRepository = DatabaseRepository()) :
     ViewModel() {
 
+    private var _id = MutableLiveData<Long>()
+    val alarmId:LiveData<Long> = _id
+
     fun getAll(): LiveData<List<AlarmModel>> {
         return databaseRepository.getAll()
     }
 
     fun insert(alarmModel: AlarmModel) = viewModelScope.launch(Dispatchers.IO) {
-        databaseRepository.insert(alarmModel)
+      val id = databaseRepository.insert(alarmModel)
+        _id.postValue(id)
     }
 
     fun update(alarmModel: AlarmModel) = viewModelScope.launch(Dispatchers.IO) {
