@@ -19,12 +19,10 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
     override fun onClick(v: View) {
         val alarmModel = v.tag as AlarmModel
         when (v.id) {
-//            R.id.deleteCityButton -> {
-//                cityActionListener.onCityDelete(city)
-//            }
-//            else -> {
-//                cityActionListener.onCityDetails(city)
-//            }
+
+            else -> {
+                alarmActionListener.onAlarmDelete(alarmModel)
+            }
         }
     }
 
@@ -44,7 +42,6 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
         val binding = ItemAlarmBinding.inflate(inflater, parent, false)
 
         binding.root.setOnClickListener(this)
-        //  binding.deleteCityButton.setOnClickListener(this)
         return MainViewHolder(binding)
     }
 
@@ -52,7 +49,6 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
         val alarm = alarmModels[position]
         with(holder.binding) {
             holder.itemView.tag = alarm
-            //  deleteCityButton.tag = alarm
             timeTextView.text = alarm.time
             descriptionTextView.text = alarm.description
             switchIsChecked.isChecked = alarm.isChecked

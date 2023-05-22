@@ -1,5 +1,6 @@
 package com.fedorov.andrii.andriiovych.alarmclock.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,17 @@ class MainFragment : Fragment() {
 
         adapter = MainAdapter(object : AlarmActionListener {
             override fun onAlarmDelete(alarmModel: AlarmModel) {
-                TODO("Not yet implemented")
+                val alertDialogBuilder = AlertDialog.Builder(context)
+                alertDialogBuilder.setTitle("Вы точно хотите удалить?")
+                alertDialogBuilder.setPositiveButton("Да") { dialog, _ ->
+                    viewModel.delete(alarmModel)
+                    dialog.dismiss()
+                }
+                alertDialogBuilder.setNegativeButton("Нет") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                val alertDialog = alertDialogBuilder.create()
+                alertDialog.show()
             }
         })
         val layoutManager = LinearLayoutManager(activity)
