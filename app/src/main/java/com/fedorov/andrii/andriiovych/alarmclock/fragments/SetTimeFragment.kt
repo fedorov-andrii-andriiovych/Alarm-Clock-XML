@@ -1,6 +1,8 @@
 package com.fedorov.andrii.andriiovych.alarmclock.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +34,35 @@ class SetTimeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addButton.setOnClickListener { addAlarm() }
         binding.cancelButton.setOnClickListener { toMainFragment() }
+        binding.hourEditText.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(text: Editable?) {
+                val input = text.toString()
+                if (input.isNotEmpty()){
+                    val hour = input.toInt()
+                    if (hour > 23){
+                        binding.hourEditText.setText("23")
+                        binding.hourEditText.setSelection(input.length)
+                    }
+                }
+            }
+        })
+        binding.minuteEditText.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(text: Editable?) {
+                val input = text.toString()
+                if (input.isNotEmpty()){
+                    val hour = input.toInt()
+                    if (hour > 59){
+                        binding.minuteEditText.setText("59")
+                        binding.minuteEditText.setSelection(input.length)
+                    }
+                }
+            }
+
+        })
     }
 
     private fun addAlarm() {
