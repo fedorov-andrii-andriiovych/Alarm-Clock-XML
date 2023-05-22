@@ -24,10 +24,6 @@ class MainViewModelModelFactory(
 class MainViewModel(private val databaseRepository: DatabaseRepository = DatabaseRepository()) :
     ViewModel() {
 
-    init {
-        insert(AlarmModel(time = "11:55", description = "Новый Будильник", isChecked = true))
-    }
-
     fun getAll(): LiveData<List<AlarmModel>> {
         return databaseRepository.getAll()
     }
