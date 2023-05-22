@@ -42,6 +42,10 @@ class MainFragment : Fragment() {
                 val alertDialog = alertDialogBuilder.create()
                 alertDialog.show()
             }
+
+            override fun onSwitchClicked(alarmModel: AlarmModel) {
+                viewModel.update(alarmModel.copy(isChecked = !alarmModel.isChecked))
+            }
         })
         val layoutManager = LinearLayoutManager(activity)
         binding.rcView.layoutManager = layoutManager
