@@ -1,29 +1,49 @@
 package com.fedorov.andrii.andriiovych.alarmclock.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fedorov.andrii.andriiovych.alarmclock.MainActivity
-import com.fedorov.andrii.andriiovych.alarmclock.R
-import com.fedorov.andrii.andriiovych.alarmclock.databinding.ActivityMainBinding
+import com.fedorov.andrii.andriiovych.alarmclock.adapters.AlarmActionListener
+import com.fedorov.andrii.andriiovych.alarmclock.adapters.MainAdapter
+import com.fedorov.andrii.andriiovych.alarmclock.data.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
+import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModel
+import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModelModelFactory
 
 
 class MainFragment : Fragment() {
-    lateinit var binding:FragmentMainBinding
+    lateinit var adapter: MainAdapter
+    lateinit var viewModel: MainViewModel
+    lateinit var binding: FragmentMainBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater,container,false)
+        viewModel = ViewModelProvider(this, MainViewModelModelFactory())[MainViewModel::class.java]
+        binding = FragmentMainBinding.inflate(inflater, container, false)
+
+        adapter = MainAdapter(object : AlarmActionListener {
+            override fun onAlarmDelete(alarmModel: AlarmModel) {
+                TODO("Not yet implemented")
+            }
+        })
+        val layoutManager = LinearLayoutManager(activity)
+        binding.rcView.layoutManager = layoutManager
+        binding.rcView.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.addAlarmButton.setOnClickListener { addAlarm() }
+        viewModel.getAll().observe(viewLifecycleOwner) { list ->
+            adapter.submitList(list)
+        }
     }
 
     private fun addAlarm() {
