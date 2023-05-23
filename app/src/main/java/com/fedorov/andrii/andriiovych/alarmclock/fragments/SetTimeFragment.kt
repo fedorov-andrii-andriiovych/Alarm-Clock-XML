@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,10 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
-import com.fedorov.andrii.andriiovych.alarmclock.R
-import com.fedorov.andrii.andriiovych.alarmclock.broadcast.MyAlarm
+import com.fedorov.andrii.andriiovych.alarmclock.broadcast.AlarmReceiver
 import com.fedorov.andrii.andriiovych.alarmclock.data.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentSetTimeBinding
 import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModel
@@ -101,25 +98,28 @@ class SetTimeFragment : Fragment() {
         )
     }
 
-    private fun setAlarm(time: Long, id: Long) {
+    fun setAlarm(time: Long, id: Long) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(requireContext(), MyAlarm::class.java)
+        val intent = Intent(requireContext(), AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             requireContext(),
             id.toInt(),
             intent,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            } else {
-                PendingIntent.FLAG_UPDATE_CURRENT
-            }
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
+
+//        alarmManager.setExactAndAllowWhileIdle(
+//                AlarmManager.RTC_WAKEUP,
+//        time,
+//        pendingIntent
+//        )
         alarmManager.setRepeating(
-            AlarmManager.RTC,
-            time,
-            AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+            AlarmManager.RTC_WAKEUP,
+            time ,
+            60000,
             pendingIntent
         )
+
         Toast.makeText(requireContext(), "Будильник установлен", Toast.LENGTH_SHORT).show()
         toMainFragment()
     }

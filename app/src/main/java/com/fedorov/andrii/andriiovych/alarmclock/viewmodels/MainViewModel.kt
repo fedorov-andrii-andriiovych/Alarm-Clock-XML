@@ -26,14 +26,14 @@ class MainViewModel(private val databaseRepository: DatabaseRepository = Databas
     ViewModel() {
 
     private var _id = MutableLiveData<Long>()
-    val alarmId:LiveData<Long> = _id
+    val alarmId: LiveData<Long> = _id
 
     fun getAll(): LiveData<List<AlarmModel>> {
         return databaseRepository.getAll()
     }
 
     fun insert(alarmModel: AlarmModel) = viewModelScope.launch(Dispatchers.IO) {
-      val id = databaseRepository.insert(alarmModel)
+        val id = databaseRepository.insert(alarmModel)
         _id.postValue(id)
     }
 

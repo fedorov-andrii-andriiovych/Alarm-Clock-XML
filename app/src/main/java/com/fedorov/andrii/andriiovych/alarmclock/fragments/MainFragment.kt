@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fedorov.andrii.andriiovych.alarmclock.MainActivity
 import com.fedorov.andrii.andriiovych.alarmclock.adapters.AlarmActionListener
 import com.fedorov.andrii.andriiovych.alarmclock.adapters.MainAdapter
-import com.fedorov.andrii.andriiovych.alarmclock.broadcast.MyAlarm
+import com.fedorov.andrii.andriiovych.alarmclock.broadcast.AlarmReceiver
 import com.fedorov.andrii.andriiovych.alarmclock.data.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
 import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModel
@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
         alertDialogBuilder.setPositiveButton("Да") { dialog, _ ->
             val alarmManager =
                 requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, MyAlarm::class.java)
+            val intent = Intent(context, AlarmReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(
                 context,
                 alarmModel.id,
