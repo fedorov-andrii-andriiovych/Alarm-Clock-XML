@@ -2,6 +2,7 @@ package com.fedorov.andrii.andriiovych.alarmclock.fragments
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -41,39 +42,28 @@ class SetTimeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.addButton.setOnClickListener { addAlarm() }
         binding.cancelButton.setOnClickListener { toMainFragment() }
-        binding.hourEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(text: Editable?) {
-                val input = text.toString()
-                if (input.isNotEmpty()) {
-                    val hour = input.toInt()
-                    if (hour > 23) {
-                        binding.hourEditText.setText("23")
-                        binding.hourEditText.setSelection(input.length)
-                    }
-                }
-            }
-        })
-        binding.minuteEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(text: Editable?) {
-                val input = text.toString()
-                if (input.isNotEmpty()) {
-                    val hour = input.toInt()
-                    if (hour > 59) {
-                        binding.minuteEditText.setText("59")
-                        binding.minuteEditText.setSelection(input.length)
-                    }
-                }
-            }
-
-        })
+        binding.showTimeButton.setOnClickListener { showTimePicker() }
         mainViewModel.alarmId.observe(viewLifecycleOwner) { id ->
             setAlarm(calendar.timeInMillis, id)
         }
     }
+
+    private fun showTimePicker() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+            binding.hourEditText.setText(selectedHour.toString())
+             binding.minuteEditText.setText(selectedMinute.toString())
+            // Обработка выбранного времени
+            val selectedTime = "$selectedHour:$selectedMinute"
+            // Действия, которые нужно выполнить после выбора времени
+        }, hour, minute, true)
+
+        timePickerDialog.show()
+    }
+
 
     private fun addAlarm() {
         val hours = binding.hourEditText.text.toString().toInt()
@@ -105,19 +95,13 @@ class SetTimeFragment : Fragment() {
             requireContext(),
             id.toInt(),
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-//        alarmManager.setExactAndAllowWhileIdle(
-//                AlarmManager.RTC_WAKEUP,
-//        time,
-//        pendingIntent
-//        )
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            time ,
-            60000,
-            pendingIntent
+        alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+        time,
+        pendingIntent
         )
 
         Toast.makeText(requireContext(), "Будильник установлен", Toast.LENGTH_SHORT).show()
