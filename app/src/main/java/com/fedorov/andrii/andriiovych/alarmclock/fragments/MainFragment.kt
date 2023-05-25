@@ -38,10 +38,6 @@ class MainFragment : Fragment() {
             override fun onAlarmDelete(alarmModel: AlarmModel) {
                 deleteAlarm(alarmModel)
             }
-
-            override fun onSwitchClicked(alarmModel: AlarmModel) {
-                viewModel.update(alarmModel.copy(isChecked = !alarmModel.isChecked))
-            }
         })
         val layoutManager = LinearLayoutManager(activity)
         binding.rcView.layoutManager = layoutManager

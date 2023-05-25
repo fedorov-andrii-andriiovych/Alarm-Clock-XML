@@ -1,17 +1,17 @@
 package com.fedorov.andrii.andriiovych.alarmclock.fragments
 
 import android.app.AlarmManager
+import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.fedorov.andrii.andriiovych.alarmclock.broadcast.AlarmReceiver
@@ -50,7 +50,17 @@ class SetTimeFragment : Fragment() {
     }
 
     private fun showDatePicker() {
-        TODO("Not yet implemented")
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            binding.apply {
+                dayTextView.text = selectedDay.toString()
+                monthTextView.text = String.format("%02d",selectedMonth+1)
+                yearTextView.text = selectedYear.toString()
+            }
+        }, year, month, day).show()
     }
 
     private fun showTimePicker() {
@@ -104,7 +114,7 @@ class SetTimeFragment : Fragment() {
         pendingIntent
         )
 
-        Toast.makeText(requireContext(), "Будильник установлен", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Заметка сохранена", Toast.LENGTH_SHORT).show()
         toMainFragment()
     }
 

@@ -11,8 +11,6 @@ import com.fedorov.andrii.andriiovych.alarmclock.databinding.ItemAlarmBinding
 
 interface AlarmActionListener {
     fun onAlarmDelete(alarmModel: AlarmModel)
-
-    fun onSwitchClicked(alarmModel: AlarmModel)
 }
 
 class MainAdapter(private val alarmActionListener: AlarmActionListener) :
@@ -51,17 +49,10 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         val alarm = alarmModels[position]
         with(holder.binding) {
-            switchIsChecked.setOnCheckedChangeListener(null)
             holder.itemView.tag = alarm
-            switchIsChecked.setOnCheckedChangeListener { _, isChecked ->
-                if (alarm.isChecked != isChecked) {
-                    alarmActionListener.onSwitchClicked(alarm)
-                }
-            }
             val time = "${alarm.hours}:${String.format("%02d", alarm.minutes)}"
             timeTextView.text = time
             descriptionTextView.text = alarm.description
-            switchIsChecked.isChecked = alarm.isChecked
         }
     }
 
