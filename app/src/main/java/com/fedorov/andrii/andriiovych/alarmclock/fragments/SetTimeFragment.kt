@@ -43,24 +43,24 @@ class SetTimeFragment : Fragment() {
         binding.addButton.setOnClickListener { addAlarm() }
         binding.cancelButton.setOnClickListener { toMainFragment() }
         binding.showTimeButton.setOnClickListener { showTimePicker() }
+        binding.showDateButton.setOnClickListener { showDatePicker() }
         mainViewModel.alarmId.observe(viewLifecycleOwner) { id ->
             setAlarm(calendar.timeInMillis, id)
         }
+    }
+
+    private fun showDatePicker() {
+        TODO("Not yet implemented")
     }
 
     private fun showTimePicker() {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
-
         val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
-            binding.hourEditText.setText(selectedHour.toString())
-             binding.minuteEditText.setText(selectedMinute.toString())
-            // Обработка выбранного времени
-            val selectedTime = "$selectedHour:$selectedMinute"
-            // Действия, которые нужно выполнить после выбора времени
+            binding.hourEditText.text =String.format("%02d",selectedHour)
+            binding.minuteEditText.text = String.format("%02d",selectedMinute)
         }, hour, minute, true)
-
         timePickerDialog.show()
     }
 
@@ -88,7 +88,7 @@ class SetTimeFragment : Fragment() {
         )
     }
 
-    fun setAlarm(time: Long, id: Long) {
+    private fun setAlarm(time: Long, id: Long) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
@@ -108,7 +108,7 @@ class SetTimeFragment : Fragment() {
         toMainFragment()
     }
 
-    fun toMainFragment() {
+    private fun toMainFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
 

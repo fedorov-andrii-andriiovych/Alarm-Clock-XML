@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Новый Будильник"
+        android:text="Новая заметка"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:textColor="@color/black"
@@ -45,38 +45,6 @@
         app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
         app:layout_constraintTop_toBottomOf="@+id/descriptionEditText" />
 
-    <TextView
-        android:id="@+id/hourEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="32dp"
-        android:maxLength="2"
-        android:maxLines="1"
-        android:text="00"
-        android:textColor="@color/black"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionEditText"
-        app:layout_constraintEnd_toStartOf="@+id/midleTextView"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@+id/descriptionEditText" />
-
-    <TextView
-        android:id="@+id/minuteEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:maxLength="2"
-        android:maxLines="1"
-        android:text="00"
-        android:textColor="@color/black"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toBottomOf="@+id/hourEditText"
-        app:layout_constraintEnd_toStartOf="@id/showTimeButton"
-        app:layout_constraintStart_toEndOf="@+id/midleTextView"
-        app:layout_constraintTop_toTopOf="@+id/hourEditText"
-        app:layout_constraintVertical_bias="0.0" />
-
     <EditText
         android:id="@+id/descriptionEditText"
         android:layout_width="match_parent"
@@ -85,7 +53,6 @@
         android:layout_marginEnd="64dp"
         android:ems="10"
         android:hint="Описание"
-        android:maxLines="1"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,25 +62,129 @@
     <ImageButton
         android:id="@+id/showTimeButton"
         android:layout_width="48dp"
-        android:layout_height="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="32dp"
         android:background="#2196F3"
         android:src="@drawable/icon_alarm_main"
-        app:layout_constraintBottom_toBottomOf="@+id/minuteEditText"
-        app:layout_constraintEnd_toEndOf="@+id/descriptionEditText"
-        app:layout_constraintTop_toTopOf="@+id/minuteEditText" />
+        app:layout_constraintBottom_toTopOf="@+id/descriptionEditText"
+        app:layout_constraintEnd_toEndOf="@+id/descriptionEditText" />
 
-    <TextView
-        android:id="@+id/midleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:maxLines="1"
-        android:text=":"
-        android:textColor="@color/black"
-        android:textSize="32sp"
-        app:layout_constraintStart_toEndOf="@id/hourEditText"
-        app:layout_constraintBottom_toBottomOf="@+id/hourEditText"
-        app:layout_constraintEnd_toStartOf="@id/minuteEditText"
-        app:layout_constraintTop_toTopOf="@+id/hourEditText"
-        app:layout_constraintVertical_bias="0.0" />
+    <ImageButton
+        android:id="@+id/showDateButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="32dp"
+        android:background="#2196F3"
+        android:src="@drawable/icon_date"
+        app:layout_constraintBottom_toTopOf="@+id/showTimeButton"
+        app:layout_constraintEnd_toEndOf="@+id/showTimeButton" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/textview_border_title"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/showDateButton"
+        app:layout_constraintEnd_toStartOf="@+id/showDateButton"
+        app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
+        app:layout_constraintTop_toTopOf="@+id/showDateButton">
+
+        <TextView
+            android:id="@+id/dayTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:text="12"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/dot1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:text="."
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/monthTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:text="05"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/dot2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:text="."
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/yearTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="4"
+            android:maxLines="1"
+            android:text="2023"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="4dp"
+        android:gravity="center"
+        android:background="@drawable/textview_border_title"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/showTimeButton"
+        app:layout_constraintEnd_toStartOf="@+id/showTimeButton"
+        app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
+        app:layout_constraintTop_toTopOf="@+id/showTimeButton">
+
+        <TextView
+            android:id="@+id/minuteEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/midleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text=":"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/hourEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="2"
+            android:maxLines="1"
+            android:text="00"
+            android:textColor="@color/black"
+            android:textSize="32sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
