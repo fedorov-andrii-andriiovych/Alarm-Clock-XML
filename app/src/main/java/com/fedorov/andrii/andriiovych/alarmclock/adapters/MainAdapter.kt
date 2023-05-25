@@ -51,7 +51,9 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
         with(holder.binding) {
             holder.itemView.tag = alarm
             val time = "${alarm.hours}:${String.format("%02d", alarm.minutes)}"
+            val date = "${alarm.day}.${String.format("%02d",alarm.month)}.${alarm.year}"
             timeTextView.text = time
+            dateTextView.text = date
             descriptionTextView.text = alarm.description
         }
     }

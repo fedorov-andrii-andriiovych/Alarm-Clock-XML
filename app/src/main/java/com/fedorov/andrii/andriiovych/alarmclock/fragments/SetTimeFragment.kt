@@ -7,25 +7,24 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.fedorov.andrii.andriiovych.alarmclock.broadcast.AlarmReceiver
 import com.fedorov.andrii.andriiovych.alarmclock.data.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentSetTimeBinding
 import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModel
 import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModelModelFactory
-import java.util.Calendar
+import java.util.*
 
 
 class SetTimeFragment : Fragment() {
     lateinit var mainViewModel: MainViewModel
     lateinit var binding: FragmentSetTimeBinding
-    lateinit var calendar: Calendar
+    var calendar: Calendar = Calendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,10 +46,20 @@ class SetTimeFragment : Fragment() {
         mainViewModel.alarmId.observe(viewLifecycleOwner) { id ->
             setAlarm(calendar.timeInMillis, id)
         }
+        initTime()
+    }
+
+    private fun initTime() {
+        binding.apply {
+            hourEditText.text =String.format("%02d",calendar.get(Calendar.HOUR))
+            minuteEditText.text = String.format("%02d",calendar.get(Calendar.MINUTE))
+            dayTextView.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
+            monthTextView.text = String.format("%02d",calendar.get(Calendar.MONTH)+1)
+            yearTextView.text = calendar.get(Calendar.YEAR).toString()
+        }
     }
 
     private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -64,7 +73,6 @@ class SetTimeFragment : Fragment() {
     }
 
     private fun showTimePicker() {
-        val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
         val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
@@ -78,12 +86,14 @@ class SetTimeFragment : Fragment() {
     private fun addAlarm() {
         val hours = binding.hourEditText.text.toString().toInt()
         val minutes = binding.minuteEditText.text.toString().toInt()
+        val day = binding.dayTextView.text.toString().toInt()
+        val month= binding.monthTextView.text.toString().toInt()
+        val year = binding.yearTextView.text.toString().toInt()
         val description = binding.descriptionEditText.text.toString()
-        calendar = Calendar.getInstance()
         calendar.set(
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH),
+            year,
+            month-1,
+            day,
             hours,
             minutes,
             0
@@ -93,7 +103,9 @@ class SetTimeFragment : Fragment() {
                 hours = hours,
                 minutes = minutes,
                 description = description,
-                isChecked = true
+                day = day,
+                month = month,
+                year = year
             )
         )
     }

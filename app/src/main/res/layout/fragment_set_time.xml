@@ -156,10 +156,9 @@
         app:layout_constraintTop_toTopOf="@+id/showTimeButton">
 
         <TextView
-            android:id="@+id/minuteEditText"
+            android:id="@+id/hourEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:maxLength="2"
             android:maxLines="1"
             android:text="00"
@@ -176,9 +175,10 @@
             android:textSize="32sp" />
 
         <TextView
-            android:id="@+id/hourEditText"
+            android:id="@+id/minuteEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:maxLength="2"
             android:maxLines="1"
             android:text="00"
