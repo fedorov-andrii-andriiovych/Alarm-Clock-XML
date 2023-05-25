@@ -1,7 +1,12 @@
 package com.fedorov.andrii.andriiovych.alarmclock
 
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.ActivityMainBinding
 import com.fedorov.andrii.andriiovych.alarmclock.fragments.MainFragment
@@ -16,10 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fragmentNavigation(MAIN_FRAGMENT)
-
     }
-
-
 
   fun fragmentNavigation(fragment: String){
       val fragmentTransaction = supportFragmentManager.beginTransaction()

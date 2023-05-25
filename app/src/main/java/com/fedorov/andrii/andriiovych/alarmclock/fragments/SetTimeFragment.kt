@@ -52,7 +52,7 @@ class SetTimeFragment : Fragment() {
 
     private fun initTime() {
         binding.apply {
-            hourEditText.text =String.format("%02d",calendar.get(Calendar.HOUR))
+            hourEditText.text =String.format("%02d",calendar.get(Calendar.HOUR_OF_DAY))
             minuteEditText.text = String.format("%02d",calendar.get(Calendar.MINUTE))
             dayTextView.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
             monthTextView.text = String.format("%02d",calendar.get(Calendar.MONTH)+1)
