@@ -25,6 +25,7 @@ class SetTimeFragment : Fragment() {
     lateinit var mainViewModel: MainViewModel
     lateinit var binding: FragmentSetTimeBinding
     var calendar: Calendar = Calendar.getInstance()
+    var description = "Новая заметка"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,7 +90,7 @@ class SetTimeFragment : Fragment() {
         val day = binding.dayTextView.text.toString().toInt()
         val month= binding.monthTextView.text.toString().toInt()
         val year = binding.yearTextView.text.toString().toInt()
-        val description = binding.descriptionEditText.text.toString()
+         description = binding.descriptionEditText.text.toString().ifEmpty { "Новая заметка" }
         calendar.set(
             year,
             month-1,
@@ -113,6 +114,8 @@ class SetTimeFragment : Fragment() {
     private fun setAlarm(time: Long, id: Long) {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireContext(), AlarmReceiver::class.java)
+        intent.putExtra(ID,id.toInt())
+        intent.putExtra(DESCRIPTION,description)
         val pendingIntent = PendingIntent.getBroadcast(
             requireContext(),
             id.toInt(),
@@ -133,6 +136,9 @@ class SetTimeFragment : Fragment() {
     private fun toMainFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
-
+    companion object{
+        const val ID = "ALERT_ID"
+        const val DESCRIPTION = "ALERT_DESCRIPTION"
+    }
 
 }
