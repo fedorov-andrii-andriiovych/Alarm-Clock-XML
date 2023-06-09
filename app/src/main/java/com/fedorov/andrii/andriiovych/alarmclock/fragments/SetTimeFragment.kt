@@ -31,6 +31,7 @@ class SetTimeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         mainViewModel =
             ViewModelProvider(this, MainViewModelModelFactory())[MainViewModel::class.java]
         binding = FragmentSetTimeBinding.inflate(inflater, container, false)
@@ -40,9 +41,9 @@ class SetTimeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.timePicker.setIs24HourView(true)
         binding.addButton.setOnClickListener { addAlarm() }
         binding.cancelButton.setOnClickListener { toMainFragment() }
-        binding.showTimeButton.setOnClickListener { showTimePicker() }
         binding.showDateButton.setOnClickListener { showDatePicker() }
         mainViewModel.alarmId.observe(viewLifecycleOwner) { id ->
             setAlarm(calendar.timeInMillis, id)
@@ -52,8 +53,6 @@ class SetTimeFragment : Fragment() {
 
     private fun initTime() {
         binding.apply {
-            hourEditText.text =String.format("%02d",calendar.get(Calendar.HOUR_OF_DAY))
-            minuteEditText.text = String.format("%02d",calendar.get(Calendar.MINUTE))
             dayTextView.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
             monthTextView.text = String.format("%02d",calendar.get(Calendar.MONTH)+1)
             yearTextView.text = calendar.get(Calendar.YEAR).toString()
@@ -73,20 +72,9 @@ class SetTimeFragment : Fragment() {
         }, year, month, day).show()
     }
 
-    private fun showTimePicker() {
-        val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
-        val timePickerDialog = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
-            binding.hourEditText.text =String.format("%02d",selectedHour)
-            binding.minuteEditText.text = String.format("%02d",selectedMinute)
-        }, hour, minute, true)
-        timePickerDialog.show()
-    }
-
-
     private fun addAlarm() {
-        val hours = binding.hourEditText.text.toString().toInt()
-        val minutes = binding.minuteEditText.text.toString().toInt()
+        val hours = binding.timePicker.hour
+        val minutes = binding.timePicker.minute
         val day = binding.dayTextView.text.toString().toInt()
         val month= binding.monthTextView.text.toString().toInt()
         val year = binding.yearTextView.text.toString().toInt()

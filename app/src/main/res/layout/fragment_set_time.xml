@@ -7,7 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SetTimeFragment">
 
+
     <!-- TODO: Update blank fragment layout -->
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:timePickerMode="spinner"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
@@ -39,7 +54,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:background="#C3B5B5"
         android:text="Отмена"
         app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
@@ -47,38 +62,26 @@
 
     <EditText
         android:id="@+id/descriptionEditText"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Описание"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/showTimeButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="32dp"
-        android:background="#2196F3"
-        android:src="@drawable/icon_alarm_main"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionEditText"
-        app:layout_constraintEnd_toEndOf="@+id/descriptionEditText" />
+        app:layout_constraintEnd_toEndOf="@+id/timePicker"
+        app:layout_constraintStart_toStartOf="@+id/timePicker"
+        app:layout_constraintTop_toBottomOf="@+id/timePicker" />
 
     <ImageButton
         android:id="@+id/showDateButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:background="#2196F3"
         android:src="@drawable/icon_date"
-        app:layout_constraintBottom_toTopOf="@+id/showTimeButton"
-        app:layout_constraintEnd_toEndOf="@+id/showTimeButton" />
+        app:layout_constraintBottom_toTopOf="@+id/timePicker"
+        app:layout_constraintEnd_toEndOf="@+id/timePicker"
+        app:tint="@color/black" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -89,7 +92,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/showDateButton"
         app:layout_constraintEnd_toStartOf="@+id/showDateButton"
-        app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
+        app:layout_constraintStart_toStartOf="@+id/timePicker"
         app:layout_constraintTop_toTopOf="@+id/showDateButton">
 
         <TextView
@@ -139,50 +142,6 @@
             android:maxLength="4"
             android:maxLines="1"
             android:text="2023"
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="4dp"
-        android:gravity="center"
-        android:background="@drawable/textview_border_title"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/showTimeButton"
-        app:layout_constraintEnd_toStartOf="@+id/showTimeButton"
-        app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
-        app:layout_constraintTop_toTopOf="@+id/showTimeButton">
-
-        <TextView
-            android:id="@+id/hourEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:text="00"
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/midleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/minuteEditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:text="00"
             android:textColor="@color/black"
             android:textSize="32sp" />
 

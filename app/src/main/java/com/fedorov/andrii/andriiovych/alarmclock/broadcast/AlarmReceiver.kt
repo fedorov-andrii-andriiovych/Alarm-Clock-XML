@@ -23,7 +23,7 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getIntExtra(SetTimeFragment.ID, 0)
         val descriptionIntent = intent.getStringExtra(SetTimeFragment.DESCRIPTION)
-        val mediaPlayer = MediaPlayer.create(context, R.raw.sound)
+        val mediaPlayer = MediaPlayer.create(context, R.raw.zvonok)
         mediaPlayer.start()
         val fullScreenIntent = Intent(context.applicationContext, MainActivity::class.java)
         fullScreenIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
@@ -45,12 +45,12 @@ class AlarmReceiver : BroadcastReceiver() {
         val notificationManager: NotificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-        var builder = NotificationCompat.Builder(context, "1")
+        val builder = NotificationCompat.Builder(context, "1")
             .setSmallIcon(R.drawable.icon_note)
             .setContentTitle("Мои задачи:")
             .setContentText(descriptionIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(NotificationCompat.CATEGORY_CALL)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setFullScreenIntent(fullScreenPendingIntent, true)
             .setOnlyAlertOnce(true)
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
