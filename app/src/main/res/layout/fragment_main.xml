@@ -5,16 +5,18 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFE500"
     tools:context=".fragments.MainFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        style="@style/TextViewPrimary"
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Мои заметки"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="32sp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
@@ -23,13 +25,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +55,9 @@
         android:scaleType="centerCrop"
         android:src="@drawable/icon_plus"
         android:padding="8dp"
+        style="@style/TextViewPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

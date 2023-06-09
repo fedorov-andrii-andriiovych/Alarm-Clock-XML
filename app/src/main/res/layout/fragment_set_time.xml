@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFE500"
     tools:context=".fragments.SetTimeFragment">
 
 
@@ -14,6 +15,7 @@
         android:id="@+id/timePicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/textview_border_title"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
         android:timePickerMode="spinner"
@@ -29,9 +31,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Новая заметка"
+        style="@style/TextViewPrimary"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="32sp"
         android:textStyle="bold"
         android:background="#2196F3"
@@ -39,11 +42,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/addButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Добавить"
+        style="@style/TextViewPrimary"
+        android:textColor="@color/white"
         android:background="#2196F3"
         app:layout_constraintBottom_toBottomOf="@+id/cancelButton"
         app:layout_constraintEnd_toEndOf="@+id/descriptionEditText"
@@ -54,7 +67,7 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="#C3B5B5"
         android:text="Отмена"
         app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
@@ -63,10 +76,12 @@
     <EditText
         android:id="@+id/descriptionEditText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/textview_border_title"
         android:ems="10"
-        android:hint="Описание"
+        android:hint="  Описание"
+
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/timePicker"
         app:layout_constraintStart_toStartOf="@+id/timePicker"
@@ -81,12 +96,11 @@
         android:src="@drawable/icon_date"
         app:layout_constraintBottom_toTopOf="@+id/timePicker"
         app:layout_constraintEnd_toEndOf="@+id/timePicker"
-        app:tint="@color/black" />
+        app:tint="@color/white" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="4dp"
         android:background="@drawable/textview_border_title"
         android:gravity="center"
         android:orientation="horizontal"
@@ -102,6 +116,7 @@
             android:maxLength="2"
             android:maxLines="1"
             android:text="12"
+            style="@style/TextViewPrimary"
             android:textColor="@color/black"
             android:textSize="32sp" />
 
@@ -109,6 +124,7 @@
             android:id="@+id/dot1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextViewPrimary"
             android:maxLength="2"
             android:maxLines="1"
             android:text="."
@@ -119,6 +135,7 @@
             android:id="@+id/monthTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextViewPrimary"
             android:maxLength="2"
             android:maxLines="1"
             android:text="05"
@@ -129,6 +146,7 @@
             android:id="@+id/dot2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextViewPrimary"
             android:maxLength="2"
             android:maxLines="1"
             android:text="."
@@ -139,6 +157,7 @@
             android:id="@+id/yearTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextViewPrimary"
             android:maxLength="4"
             android:maxLines="1"
             android:text="2023"
