@@ -5,59 +5,69 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFE500"
+    android:background="@color/background"
     tools:context=".presentation.fragments.SetTimeFragment">
 
 
     <!-- TODO: Update blank fragment layout -->
 
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        android:background="@drawable/textview_border_item"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:hapticFeedbackEnabled="true"
+        android:theme="@style/MyDatePicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/showDatePickerButton" />
+
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/textview_border_title"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/textview_border_item"
+        android:theme="@style/MyDatePicker"
         android:timePickerMode="spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Новая заметка"
+        android:text="@string/new_note"
         style="@style/TextViewPrimary"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/white"
+        android:textColor="@color/rec_item"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:background="#2196F3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Button
         android:id="@+id/addButton"
+        style="@style/TextViewPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/textview_border_item"
         android:text="Добавить"
-        style="@style/TextViewPrimary"
         android:textColor="@color/white"
-        android:background="#2196F3"
         app:layout_constraintBottom_toBottomOf="@+id/cancelButton"
         app:layout_constraintEnd_toEndOf="@+id/descriptionEditText"
         app:layout_constraintStart_toEndOf="@+id/cancelButton"
@@ -67,103 +77,45 @@
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="#C3B5B5"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/textview_border_cancel_button"
         android:text="Отмена"
-        app:layout_constraintStart_toStartOf="@+id/descriptionEditText"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEditText" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/descriptionEditText" />
 
     <EditText
         android:id="@+id/descriptionEditText"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/textview_border_title"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/textview_border_floating_button"
         android:ems="10"
-        android:hint="  Описание"
-
-        android:inputType="textPersonName"
+        android:gravity="start"
+        android:hint="@string/description"
+        android:padding="16dp"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/cancelButton"
         app:layout_constraintEnd_toEndOf="@+id/timePicker"
         app:layout_constraintStart_toStartOf="@+id/timePicker"
         app:layout_constraintTop_toBottomOf="@+id/timePicker" />
 
-    <ImageButton
-        android:id="@+id/showDateButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:background="#2196F3"
-        android:src="@drawable/icon_date"
-        app:layout_constraintBottom_toTopOf="@+id/timePicker"
-        app:layout_constraintEnd_toEndOf="@+id/timePicker"
-        app:tint="@color/white" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@drawable/textview_border_title"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/showDateButton"
-        app:layout_constraintEnd_toStartOf="@+id/showDateButton"
-        app:layout_constraintStart_toStartOf="@+id/timePicker"
-        app:layout_constraintTop_toTopOf="@+id/showDateButton">
-
-        <TextView
-            android:id="@+id/dayTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:text="12"
-            style="@style/TextViewPrimary"
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/dot1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextViewPrimary"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:text="."
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/monthTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextViewPrimary"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:text="05"
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/dot2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextViewPrimary"
-            android:maxLength="2"
-            android:maxLines="1"
-            android:text="."
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-        <TextView
-            android:id="@+id/yearTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextViewPrimary"
-            android:maxLength="4"
-            android:maxLines="1"
-            android:text="2023"
-            android:textColor="@color/black"
-            android:textSize="32sp" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/showDatePickerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/textview_border_item"
+        android:text="Выбрать дату"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

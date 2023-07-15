@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        fragmentNavigation(MAIN_FRAGMENT)
+        if (savedInstanceState == null) fragmentNavigation(MAIN_FRAGMENT)
     }
 
   fun fragmentNavigation(fragment: String){

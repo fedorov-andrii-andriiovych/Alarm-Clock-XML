@@ -6,4 +6,10 @@
     <string name="Are_want_to_delete">Вы точно хотите удалить?</string>
     <string name="new_note">Новая заметка</string>
     <string name="yes">Да</string>
+    <string name="my_notes">Мои заметки</string>
+    <string name="dote">.</string>
+    <string name="gone_show_date">Скрыть выбор даты</string>
+    <string name="choice_date">Выбрать дату</string>
+    <string name="description">Описание</string>
+    <string name="note_is_saved">Заметка сохранена</string>
 </resources>

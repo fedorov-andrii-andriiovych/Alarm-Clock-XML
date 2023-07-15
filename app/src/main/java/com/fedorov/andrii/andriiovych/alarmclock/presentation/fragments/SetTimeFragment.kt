@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,8 @@ class SetTimeFragment : Fragment() {
     private val mainViewModel: MainViewModel by viewModels()
     lateinit var binding: FragmentSetTimeBinding
     var calendar: Calendar = Calendar.getInstance()
-    private lateinit var description:String
+    private lateinit var description: String
+    private var isDatePickerShow = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,43 +42,40 @@ class SetTimeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.timePicker.setIs24HourView(true)
-        binding.addButton.setOnClickListener { addAlarm() }
-        binding.cancelButton.setOnClickListener { toMainFragment() }
-        binding.showDateButton.setOnClickListener { showDatePicker() }
+        binding.apply {
+            timePicker.setIs24HourView(true)
+            addButton.setOnClickListener { addAlarm() }
+            cancelButton.setOnClickListener { toMainFragment() }
+            showDatePickerButton.setOnClickListener {
+                isDatePickerShow = !isDatePickerShow
+                showDatePickerButton()
+            }
+        }
         mainViewModel.alarmId.observe(viewLifecycleOwner) { id ->
             setAlarm(calendar.timeInMillis, id)
         }
-        initTime()
     }
 
-    private fun initTime() {
+    private fun showDatePickerButton() {
         binding.apply {
-            dayTextView.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
-            monthTextView.text = String.format("%02d", calendar.get(Calendar.MONTH) + 1)
-            yearTextView.text = calendar.get(Calendar.YEAR).toString()
-        }
-    }
-
-    private fun showDatePicker() {
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-            binding.apply {
-                dayTextView.text = selectedDay.toString()
-                monthTextView.text = String.format("%02d", selectedMonth + 1)
-                yearTextView.text = selectedYear.toString()
+            if (isDatePickerShow) {
+                datePicker.visibility = View.VISIBLE
+                showDatePickerButton.text = getString(R.string.gone_show_date)
             }
-        }, year, month, day).show()
+            else {
+                datePicker.visibility = View.GONE
+                showDatePickerButton.text = getString(R.string.choice_date)
+            }
+        }
+
     }
 
     private fun addAlarm() {
         val hours = binding.timePicker.hour
         val minutes = binding.timePicker.minute
-        val day = binding.dayTextView.text.toString().toInt()
-        val month = binding.monthTextView.text.toString().toInt()
-        val year = binding.yearTextView.text.toString().toInt()
+        val day = binding.datePicker.dayOfMonth
+        val month = binding.datePicker.month
+        val year = binding.datePicker.year
         description =
             binding.descriptionEditText.text.toString().ifEmpty { getString(R.string.new_note) }
         calendar.set(
@@ -117,7 +116,7 @@ class SetTimeFragment : Fragment() {
             pendingIntent
         )
 
-        Toast.makeText(requireContext(), "Заметка сохранена", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.note_is_saved), Toast.LENGTH_SHORT).show()
         toMainFragment()
     }
 
