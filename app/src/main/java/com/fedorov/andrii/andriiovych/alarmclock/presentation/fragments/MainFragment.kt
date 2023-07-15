@@ -1,4 +1,4 @@
-package com.fedorov.andrii.andriiovych.alarmclock.fragments
+package com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments
 
 import android.app.AlarmManager
 import android.app.AlertDialog
@@ -13,14 +13,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fedorov.andrii.andriiovych.alarmclock.MainActivity
-import com.fedorov.andrii.andriiovych.alarmclock.adapters.AlarmActionListener
-import com.fedorov.andrii.andriiovych.alarmclock.adapters.MainAdapter
-import com.fedorov.andrii.andriiovych.alarmclock.broadcast.AlarmReceiver
-import com.fedorov.andrii.andriiovych.alarmclock.data.AlarmModel
+import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
-import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModel
-import com.fedorov.andrii.andriiovych.alarmclock.viewmodels.MainViewModelModelFactory
+import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.MainActivity
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.AlarmActionListener
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.MainAdapter
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.broadcast.AlarmReceiver
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModelModelFactory
 
 
 class MainFragment : Fragment() {
@@ -47,8 +48,8 @@ class MainFragment : Fragment() {
 
     fun deleteAlarm(alarmModel: AlarmModel) {
         val alertDialogBuilder = AlertDialog.Builder(context)
-        alertDialogBuilder.setTitle("Вы точно хотите удалить?")
-        alertDialogBuilder.setPositiveButton("Да") { dialog, _ ->
+        alertDialogBuilder.setTitle(getString(R.string.Are_want_to_delete))
+        alertDialogBuilder.setPositiveButton(getString(R.string.yes)) { dialog, _ ->
             val alarmManager =
                 requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, AlarmReceiver::class.java)
@@ -67,7 +68,7 @@ class MainFragment : Fragment() {
             viewModel.delete(alarmModel)
             dialog.dismiss()
         }
-        alertDialogBuilder.setNegativeButton("Нет") { dialog, _ ->
+        alertDialogBuilder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
             dialog.dismiss()
         }
         val alertDialog = alertDialogBuilder.create()
@@ -84,7 +85,7 @@ class MainFragment : Fragment() {
     }
 
     private fun addAlarm() {
-        val activity = activity as MainActivity
+        val activity = requireActivity() as MainActivity
         activity.fragmentNavigation(MainActivity.SET_TIME_FRAGMENT)
     }
 

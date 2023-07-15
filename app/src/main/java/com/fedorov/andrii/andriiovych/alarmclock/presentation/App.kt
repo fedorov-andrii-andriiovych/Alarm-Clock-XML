@@ -1,13 +1,13 @@
-package com.fedorov.andrii.andriiovych.alarmclock
+package com.fedorov.andrii.andriiovych.alarmclock.presentation
 
 import android.app.Application
 import androidx.room.Room
-import com.fedorov.andrii.andriiovych.alarmclock.data.AppDatabase
+import com.fedorov.andrii.andriiovych.alarmclock.data.database.AppDatabase
 
 class App : Application() {
 
     companion object{
-        lateinit var instance:App
+        lateinit var instance: App
     }
 
     private lateinit var database: AppDatabase

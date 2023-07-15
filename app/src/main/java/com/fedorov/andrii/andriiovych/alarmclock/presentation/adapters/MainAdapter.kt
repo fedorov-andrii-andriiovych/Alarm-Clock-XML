@@ -1,13 +1,11 @@
-package com.fedorov.andrii.andriiovych.alarmclock.adapters
+package com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import com.fedorov.andrii.andriiovych.alarmclock.R
-import com.fedorov.andrii.andriiovych.alarmclock.data.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.ItemAlarmBinding
+import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 
 interface AlarmActionListener {
     fun onAlarmDelete(alarmModel: AlarmModel)

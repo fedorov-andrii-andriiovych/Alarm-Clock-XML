@@ -17,9 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlarmClock"
         tools:targetApi="31"
-        android:name=".App">
+        android:name=".presentation.App">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:showOnLockScreen="true"
             android:exported="true">
             <intent-filter>
@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".broadcast.AlarmReceiver"
+        <receiver android:name=".presentation.broadcast.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
         </receiver>

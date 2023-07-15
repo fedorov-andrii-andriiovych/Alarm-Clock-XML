@@ -1,16 +1,11 @@
-package com.fedorov.andrii.andriiovych.alarmclock
+package com.fedorov.andrii.andriiovych.alarmclock.presentation
 
-import android.app.NotificationManager
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
-import androidx.fragment.app.Fragment
+import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.ActivityMainBinding
-import com.fedorov.andrii.andriiovych.alarmclock.fragments.MainFragment
-import com.fedorov.andrii.andriiovych.alarmclock.fragments.SetTimeFragment
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.MainFragment
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.SetTimeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,8 +21,8 @@ class MainActivity : AppCompatActivity() {
   fun fragmentNavigation(fragment: String){
       val fragmentTransaction = supportFragmentManager.beginTransaction()
       when(fragment){
-          SET_TIME_FRAGMENT -> fragmentTransaction.replace(R.id.container,SetTimeFragment()).addToBackStack("")
-          MAIN_FRAGMENT -> fragmentTransaction.replace(R.id.container,MainFragment())
+          SET_TIME_FRAGMENT -> fragmentTransaction.replace(R.id.container, SetTimeFragment()).addToBackStack("")
+          MAIN_FRAGMENT -> fragmentTransaction.replace(R.id.container, MainFragment())
       }
       fragmentTransaction.commit()
     }
