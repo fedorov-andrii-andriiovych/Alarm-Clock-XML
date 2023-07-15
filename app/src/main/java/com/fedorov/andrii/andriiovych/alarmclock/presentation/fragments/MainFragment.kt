@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
@@ -21,20 +21,19 @@ import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.AlarmActi
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.MainAdapter
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.broadcast.AlarmReceiver
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModelModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     lateinit var adapter: MainAdapter
-    lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
     lateinit var binding: FragmentMainBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this, MainViewModelModelFactory())[MainViewModel::class.java]
         binding = FragmentMainBinding.inflate(inflater, container, false)
-
         adapter = MainAdapter(object : AlarmActionListener {
             override fun onAlarmDelete(alarmModel: AlarmModel) {
                 deleteAlarm(alarmModel)

@@ -6,7 +6,9 @@ import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.ActivityMainBinding
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.MainFragment
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.SetTimeFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding

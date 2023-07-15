@@ -3,7 +3,9 @@ package com.fedorov.andrii.andriiovych.alarmclock.presentation
 import android.app.Application
 import androidx.room.Room
 import com.fedorov.andrii.andriiovych.alarmclock.data.database.AppDatabase
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class App : Application() {
 
     companion object{

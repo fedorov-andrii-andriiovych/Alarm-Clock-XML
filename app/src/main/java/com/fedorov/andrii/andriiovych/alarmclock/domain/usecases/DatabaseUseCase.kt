@@ -1,11 +1,12 @@
 package com.fedorov.andrii.andriiovych.alarmclock.domain.usecases
 
 import androidx.lifecycle.LiveData
-import com.fedorov.andrii.andriiovych.alarmclock.data.reposytories.DatabaseRepositoryImpl
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.domain.reposytories.DatabaseRepository
+import javax.inject.Inject
 
-class DatabaseUseCase(private val databaseRepository: DatabaseRepository = DatabaseRepositoryImpl()) {
+
+class DatabaseUseCase @Inject constructor(private val databaseRepository: DatabaseRepository) {
 
 
     fun getAll(): LiveData<List<AlarmModel>> {

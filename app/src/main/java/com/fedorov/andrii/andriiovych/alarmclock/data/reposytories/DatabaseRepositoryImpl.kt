@@ -7,14 +7,16 @@ import com.fedorov.andrii.andriiovych.alarmclock.data.mappers.AlarmModelMapper
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.domain.reposytories.DatabaseRepository
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.App
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DatabaseRepositoryImpl(
-    private val database: AppDatabase = App.instance.getDatabase(),
-    private val alarmModelMapper: AlarmModelMapper = AlarmModelMapper(),
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+class DatabaseRepositoryImpl @Inject constructor(
+    private val database: AppDatabase ,
+    private val alarmModelMapper: AlarmModelMapper,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) :
     DatabaseRepository {
 

@@ -2,9 +2,9 @@ package com.fedorov.andrii.andriiovych.alarmclock.data.mappers
 
 import com.fedorov.andrii.andriiovych.alarmclock.data.database.models.AlarmModelEntity
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
+import javax.inject.Inject
 
-class AlarmModelMapper {
-
+class AlarmModelMapper @Inject constructor() {
     fun toAlarmModel(alarmModelEntity: AlarmModelEntity): AlarmModel {
         return AlarmModel(
             id = alarmModelEntity.id,

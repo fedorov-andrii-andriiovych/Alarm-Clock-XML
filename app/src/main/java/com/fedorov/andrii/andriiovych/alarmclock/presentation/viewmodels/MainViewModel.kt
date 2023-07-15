@@ -5,22 +5,25 @@ import com.fedorov.andrii.andriiovych.alarmclock.data.reposytories.DatabaseRepos
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.domain.reposytories.DatabaseRepository
 import com.fedorov.andrii.andriiovych.alarmclock.domain.usecases.DatabaseUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModelModelFactory(
-    private val databaseUseCase: DatabaseUseCase = DatabaseUseCase()
-) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return MainViewModel(databaseUseCase) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}
 
-class MainViewModel(private val databaseUseCase: DatabaseUseCase = DatabaseUseCase()) :
+//class MainViewModelModelFactory(
+//    private val databaseUseCase: DatabaseUseCase = DatabaseUseCase()
+//) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+//            @Suppress("UNCHECKED_CAST")
+//            return MainViewModel(databaseUseCase) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}
+@HiltViewModel
+class MainViewModel @Inject constructor(private val databaseUseCase: DatabaseUseCase) :
     ViewModel() {
 
     private var _id = MutableLiveData<Long>()

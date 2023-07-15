@@ -11,18 +11,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentSetTimeBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.broadcast.AlarmReceiver
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModelModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 
+@AndroidEntryPoint
 class SetTimeFragment : Fragment() {
-    lateinit var mainViewModel: MainViewModel
+
+    private val mainViewModel: MainViewModel by viewModels()
     lateinit var binding: FragmentSetTimeBinding
     var calendar: Calendar = Calendar.getInstance()
     private lateinit var description:String
@@ -31,9 +33,6 @@ class SetTimeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        mainViewModel =
-            ViewModelProvider(this, MainViewModelModelFactory())[MainViewModel::class.java]
         binding = FragmentSetTimeBinding.inflate(inflater, container, false)
         return binding.root
     }
