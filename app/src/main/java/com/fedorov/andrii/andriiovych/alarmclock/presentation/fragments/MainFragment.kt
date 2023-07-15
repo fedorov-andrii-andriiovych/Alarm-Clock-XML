@@ -12,6 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
@@ -22,6 +25,7 @@ import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.MainAdapt
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.broadcast.AlarmReceiver
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -43,6 +47,18 @@ class MainFragment : Fragment() {
         binding.rcView.layoutManager = layoutManager
         binding.rcView.adapter = adapter
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.addAlarmButton.setOnClickListener { addAlarm() }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getAll().collect { list ->
+                    adapter.submitList(list)
+                }
+            }
+        }
     }
 
     fun deleteAlarm(alarmModel: AlarmModel) {
@@ -72,15 +88,6 @@ class MainFragment : Fragment() {
         }
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.addAlarmButton.setOnClickListener { addAlarm() }
-        viewModel.getAll().observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
-        }
     }
 
     private fun addAlarm() {
