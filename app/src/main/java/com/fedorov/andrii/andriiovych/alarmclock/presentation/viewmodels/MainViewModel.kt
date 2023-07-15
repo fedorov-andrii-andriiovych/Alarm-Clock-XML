@@ -7,21 +7,10 @@ import com.fedorov.andrii.andriiovych.alarmclock.domain.reposytories.DatabaseRep
 import com.fedorov.andrii.andriiovych.alarmclock.domain.usecases.DatabaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
-//class MainViewModelModelFactory(
-//    private val databaseUseCase: DatabaseUseCase = DatabaseUseCase()
-//) : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-//            @Suppress("UNCHECKED_CAST")
-//            return MainViewModel(databaseUseCase) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//}
 @HiltViewModel
 class MainViewModel @Inject constructor(private val databaseUseCase: DatabaseUseCase) :
     ViewModel() {
@@ -29,7 +18,7 @@ class MainViewModel @Inject constructor(private val databaseUseCase: DatabaseUse
     private var _id = MutableLiveData<Long>()
     val alarmId: LiveData<Long> = _id
 
-    fun getAll(): LiveData<List<AlarmModel>> {
+    fun getAll(): Flow<List<AlarmModel>> {
         return databaseUseCase.getAll()
     }
 
