@@ -9,7 +9,15 @@
     <string name="my_notes">Мои заметки</string>
     <string name="dote">.</string>
     <string name="gone_show_date">Скрыть выбор даты</string>
+    <string name="gone_show_time">Скрыть выбор времени</string>
     <string name="choice_date">Выбрать дату</string>
     <string name="description">Описание</string>
     <string name="note_is_saved">Заметка сохранена</string>
+    <string name="note_is_changed">Заметка изменена</string>
+    <string name="add">Добавить</string>
+    <string name="cancel">Отмена</string>
+    <string name="change_note">Редактировать заметку</string>
+    <string name="change_data">Редактировать дату</string>
+    <string name="change_time">Редактировать время</string>
+    <string name="change">Изменить</string>
 </resources>

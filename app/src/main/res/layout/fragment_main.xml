@@ -10,16 +10,16 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        style="@style/TextViewPrimary"
         android:id="@+id/textView"
+        style="@style/TextViewPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/my_notes"
-        android:textColor="@color/rec_item"
-        android:textSize="32sp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:text="@string/my_notes"
+        android:textColor="@color/rec_item"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +51,6 @@
         android:src="@drawable/icon_plus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/rec_item" />
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

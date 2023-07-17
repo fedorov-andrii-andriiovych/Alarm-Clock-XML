@@ -4,7 +4,7 @@ plugins {
     id "org.jetbrains.kotlin.kapt"
     id "kotlin-kapt"
     id("com.google.dagger.hilt.android")
-}
+    id("kotlin-parcelize")}
 
 android {
     namespace 'com.fedorov.andrii.andriiovych.alarmclock'

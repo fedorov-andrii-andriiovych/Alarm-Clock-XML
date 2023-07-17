@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".presentation.fragments.SetTimeFragment">
+    tools:context=".presentation.fragments.ChangeNoteFragment">
 
 
     <!-- TODO: Update blank fragment layout -->
@@ -38,10 +38,11 @@
         android:background="@drawable/textview_border_item"
         android:theme="@style/MyDatePicker"
         android:timePickerMode="spinner"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/datePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/showTimePickerButton" />
 
     <TextView
         android:id="@+id/textView"
@@ -51,7 +52,7 @@
         android:gravity="center"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:text="@string/new_note"
+        android:text="@string/change_note"
         android:textColor="@color/rec_item"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -60,13 +61,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/editButton"
         style="@style/TextViewPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/textview_border_item"
-        android:text="@string/add"
+        android:text="@string/change"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/cancelButton"
         app:layout_constraintEnd_toEndOf="@+id/descriptionEditText"
@@ -87,21 +88,23 @@
         android:id="@+id/descriptionEditText"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/textview_border_floating_button"
         android:ems="10"
         android:gravity="start"
         android:hint="@string/description"
-        android:padding="16dp"
         android:inputType="textMultiLine"
+        android:maxLines="10"
+        android:padding="16dp"
+        android:scrollbars="vertical"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        android:maxLines="10"
-        android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/cancelButton"
-        app:layout_constraintEnd_toEndOf="@+id/timePicker"
-        app:layout_constraintStart_toStartOf="@+id/timePicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timePicker" />
 
     <Button
@@ -112,10 +115,24 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/textview_border_item"
-        android:text="@string/choice_date"
+        android:text="@string/change_data"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView" />
+
+    <Button
+        android:id="@+id/showTimePickerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/textview_border_item"
+        android:text="@string/change_time"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/datePicker" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

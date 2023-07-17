@@ -42,6 +42,10 @@ class MainFragment : Fragment() {
             override fun onAlarmDelete(alarmModel: AlarmModel) {
                 deleteAlarm(alarmModel)
             }
+
+            override fun onChangeNote(alarmModel: AlarmModel) {
+               toFragment(alarmModel,MainActivity.CHANGE_NOTE_FRAGMENT)
+            }
         })
         val layoutManager = LinearLayoutManager(activity)
         binding.rcView.layoutManager = layoutManager
@@ -51,7 +55,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.addAlarmButton.setOnClickListener { addAlarm() }
+        binding.addAlarmButton.setOnClickListener { toFragment(null,MainActivity.SET_TIME_FRAGMENT) }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getAll().collect { list ->
@@ -90,9 +94,9 @@ class MainFragment : Fragment() {
         alertDialog.show()
     }
 
-    private fun addAlarm() {
+    private fun toFragment(alarmModel: AlarmModel?, fragment: String) {
         val activity = requireActivity() as MainActivity
-        activity.fragmentNavigation(MainActivity.SET_TIME_FRAGMENT)
+        activity.fragmentNavigation(alarmModel,fragment)
     }
 
 }

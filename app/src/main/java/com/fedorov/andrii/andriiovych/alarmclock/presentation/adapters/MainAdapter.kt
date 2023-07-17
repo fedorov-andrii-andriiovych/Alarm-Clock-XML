@@ -11,6 +11,8 @@ import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 
 interface AlarmActionListener {
     fun onAlarmDelete(alarmModel: AlarmModel)
+
+    fun onChangeNote(alarmModel: AlarmModel)
 }
 
 class MainAdapter(private val alarmActionListener: AlarmActionListener) :
@@ -19,15 +21,15 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
     class MainViewHolder(val binding: ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onClick(v: View) {
-        Log.d("TAGGG,","1adapter")
         val alarmModel = v.tag as AlarmModel
         when (v.id) {
 
             R.id.deleteButton -> {
-                Log.d("TAGGG,","adapter")
                 alarmActionListener.onAlarmDelete(alarmModel)
             }
-            else -> {}
+            else -> {
+                alarmActionListener.onChangeNote(alarmModel)
+            }
         }
     }
 
@@ -56,7 +58,7 @@ class MainAdapter(private val alarmActionListener: AlarmActionListener) :
             holder.itemView.tag = alarm
             deleteButton.tag = alarm
             val time = "${alarm.hours}:${String.format("%02d", alarm.minutes)}"
-            val date = "${alarm.day}.${String.format("%02d",alarm.month)}.${alarm.year}"
+            val date = "${alarm.day}.${String.format("%02d", alarm.month +1)}.${alarm.year}"
             timeTextView.text = time
             dateTextView.text = date
             descriptionTextView.text = alarm.description

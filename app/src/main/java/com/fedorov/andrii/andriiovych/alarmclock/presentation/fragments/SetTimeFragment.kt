@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,7 +81,7 @@ class SetTimeFragment : Fragment() {
             binding.descriptionEditText.text.toString().ifEmpty { getString(R.string.new_note) }
         calendar.set(
             year,
-            month - 1,
+            month ,
             day,
             hours,
             minutes,
@@ -125,8 +126,8 @@ class SetTimeFragment : Fragment() {
     }
 
     companion object {
-        const val ID = "ALERT_ID"
-        const val DESCRIPTION = "ALERT_DESCRIPTION"
+       const val ID = "ALERT_ID"
+       const val DESCRIPTION = "ALERT_DESCRIPTION"
     }
 
 }
