@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.AlarmCreator
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.MainActivity
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.AlarmActionListener
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.MainAdapter
@@ -26,6 +27,7 @@ import com.fedorov.andrii.andriiovych.alarmclock.presentation.broadcast.AlarmRec
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -33,6 +35,8 @@ class MainFragment : Fragment() {
     lateinit var adapter: MainAdapter
     private val viewModel: MainViewModel by viewModels()
     lateinit var binding: FragmentMainBinding
+    @Inject
+    lateinit var alarmCreator: AlarmCreator
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +44,7 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater, container, false)
         adapter = MainAdapter(object : AlarmActionListener {
             override fun onAlarmDelete(alarmModel: AlarmModel) {
+                alarmCreator.deleteAlarm(alarmModel)
                 deleteAlarm(alarmModel)
             }
 

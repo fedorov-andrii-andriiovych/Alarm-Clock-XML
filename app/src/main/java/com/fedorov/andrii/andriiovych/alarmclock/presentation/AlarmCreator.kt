@@ -11,7 +11,7 @@ import java.util.*
 import javax.inject.Inject
 
 class AlarmCreator @Inject constructor(@ApplicationContext val context: Context) {
-
+    private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     fun createAlarm(alarmModel: AlarmModel): Boolean {
 
         val calendar = Calendar.getInstance()
@@ -23,7 +23,6 @@ class AlarmCreator @Inject constructor(@ApplicationContext val context: Context)
             alarmModel.minutes,
             0
         )
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
         intent.putExtra(ID, alarmModel.id)
         intent.putExtra(DESCRIPTION, alarmModel.description)
@@ -33,13 +32,24 @@ class AlarmCreator @Inject constructor(@ApplicationContext val context: Context)
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,
             pendingIntent
         )
         return true
+    }
+
+    fun deleteAlarm(alarmModel: AlarmModel) {
+        val intent = Intent(context, AlarmReceiver::class.java)
+        intent.putExtra(ID, alarmModel.id)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            alarmModel.id,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager.cancel(pendingIntent)
     }
 
     companion object {
