@@ -14,13 +14,14 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.MainActivity
 import com.fedorov.andrii.andriiovych.alarmclock.R
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.AlarmCreator
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.SetTimeFragment
 
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val id = intent.getIntExtra(SetTimeFragment.ID, 0)
-        val descriptionIntent = intent.getStringExtra(SetTimeFragment.DESCRIPTION)
+        val id = intent.getIntExtra(AlarmCreator.ID, 0)
+        val descriptionIntent = intent.getStringExtra(AlarmCreator.DESCRIPTION)
         val mediaPlayer = MediaPlayer.create(context, R.raw.zvonok)
         mediaPlayer.start()
         val fullScreenIntent = Intent(context.applicationContext, MainActivity::class.java)

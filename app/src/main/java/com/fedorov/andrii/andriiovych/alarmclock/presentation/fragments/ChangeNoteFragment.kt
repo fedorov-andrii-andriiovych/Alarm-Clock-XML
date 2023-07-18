@@ -1,9 +1,5 @@
 package com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +10,11 @@ import androidx.fragment.app.viewModels
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentChangeNoteBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.AlarmCreator
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.MainActivity
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.broadcast.AlarmReceiver
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Calendar
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangeNoteFragment : Fragment() {
@@ -26,6 +22,9 @@ class ChangeNoteFragment : Fragment() {
     lateinit var binding: FragmentChangeNoteBinding
     private var isShowDate: Boolean = false
     private var isShowTime: Boolean = false
+
+    @Inject
+    lateinit var alarmCreator: AlarmCreator
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,8 +36,7 @@ class ChangeNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val alarmModel = arguments?.getParcelable<AlarmModel>(MainActivity.NOTE)
-        initState(alarmModel!!)
+        val alarmModel = arguments?.getParcelable<AlarmModel>(MainActivity.NOTE)!!
         binding.apply {
             cancelButton.setOnClickListener { toFragment() }
             editButton.setOnClickListener { saveChanges(alarmModel) }
@@ -53,54 +51,36 @@ class ChangeNoteFragment : Fragment() {
         }
         initTimeAndDate(alarmModel)
     }
-    private fun initTimeAndDate(alarmModel: AlarmModel){
+
+    private fun initTimeAndDate(alarmModel: AlarmModel) {
         binding.apply {
-            datePicker.init(alarmModel.year,alarmModel.month,alarmModel.day,null)
+            datePicker.init(alarmModel.year, alarmModel.month, alarmModel.day, null)
             timePicker.hour = alarmModel.hours
             timePicker.minute = alarmModel.minutes
+            descriptionEditText.setText(alarmModel.description)
         }
     }
 
     private fun saveChanges(model: AlarmModel) {
-            val alarmModel = AlarmModel(
-                id = model.id,
-                hours = binding.timePicker.hour,
-                minutes = binding.timePicker.minute,
-                day = binding.datePicker.dayOfMonth,
-                month = binding.datePicker.month,
-                year = binding.datePicker.year,
-                description = binding.descriptionEditText.text.toString()
-            )
-            mainViewModel.update(alarmModel)
-        setAlarm(alarmModel)
-        toFragment()
-    }
-    private fun setAlarm(alarmModel: AlarmModel) {
-        val calendar = Calendar.getInstance()
-        calendar.set(alarmModel.year,alarmModel.month,alarmModel.day,alarmModel.hours,alarmModel.minutes,0)
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(requireContext(), AlarmReceiver::class.java)
-        intent.putExtra(ID,alarmModel.id)
-        intent.putExtra(DESCRIPTION, alarmModel.description)
-        val pendingIntent = PendingIntent.getBroadcast(
-            requireContext(),
-            alarmModel.id,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        val alarmModel = AlarmModel(
+            id = model.id,
+            hours = binding.timePicker.hour,
+            minutes = binding.timePicker.minute,
+            day = binding.datePicker.dayOfMonth,
+            month = binding.datePicker.month,
+            year = binding.datePicker.year,
+            description = binding.descriptionEditText.text.toString()
         )
-
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            pendingIntent
-        )
-        Toast.makeText(requireContext(), getString(R.string.note_is_changed), Toast.LENGTH_SHORT).show()
+        mainViewModel.update(alarmModel = alarmModel)
+        val result = setAlarm(alarmModel)
+        if (result) toFragment()
     }
 
-    private fun initState(alarmModel: AlarmModel) {
-        binding.apply {
-            descriptionEditText.setText(alarmModel.description)
-        }
+    private fun setAlarm(alarmModel: AlarmModel): Boolean {
+        val result = alarmCreator.createAlarm(alarmModel = alarmModel)
+        Toast.makeText(requireContext(), getString(R.string.note_is_changed), Toast.LENGTH_SHORT)
+            .show()
+        return result
     }
 
     private fun showDate() {
@@ -130,10 +110,4 @@ class ChangeNoteFragment : Fragment() {
     private fun toFragment() {
         activity?.supportFragmentManager?.popBackStack()
     }
-
-    companion object {
-        private const val ID = "ALERT_ID"
-        private const val DESCRIPTION = "ALERT_DESCRIPTION"
-    }
-
 }
