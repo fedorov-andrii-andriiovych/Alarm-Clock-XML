@@ -20,4 +20,6 @@
     <string name="change_data">Редактировать дату</string>
     <string name="change_time">Редактировать время</string>
     <string name="change">Изменить</string>
+    <string name="reminders">Reminders</string>
+    <string name="my_tasks">My tasks:</string>
 </resources>

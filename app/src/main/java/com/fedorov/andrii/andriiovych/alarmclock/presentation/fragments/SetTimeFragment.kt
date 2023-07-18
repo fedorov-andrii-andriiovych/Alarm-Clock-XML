@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentSetTimeBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
@@ -40,7 +41,9 @@ class SetTimeFragment : Fragment() {
         binding.apply {
             timePicker.setIs24HourView(true)
             addButton.setOnClickListener { saveModel() }
-            cancelButton.setOnClickListener { toMainFragment() }
+            cancelButton.setOnClickListener {
+                toMainScreen()
+            }
             showDatePickerButton.setOnClickListener {
                 isDatePickerShow = !isDatePickerShow
                 showDatePickerButton()
@@ -82,10 +85,10 @@ class SetTimeFragment : Fragment() {
         val result = alarmCreator.createAlarm(alarmModel = alarmModel.copy(id = id.toInt()))
         Toast.makeText(requireContext(), getString(R.string.note_is_saved), Toast.LENGTH_SHORT)
             .show()
-        if (result) toMainFragment()
+        if (result) toMainScreen()
     }
 
-    private fun toMainFragment() {
-        activity?.supportFragmentManager?.popBackStack()
+    private fun toMainScreen() {
+        this.findNavController().navigate(R.id.action_setTimeFragment_to_mainFragment2)
     }
 }

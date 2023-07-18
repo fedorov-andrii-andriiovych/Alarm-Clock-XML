@@ -15,6 +15,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
@@ -49,7 +51,8 @@ class MainFragment : Fragment() {
             }
 
             override fun onChangeNote(alarmModel: AlarmModel) {
-               toFragment(alarmModel,MainActivity.CHANGE_NOTE_FRAGMENT)
+                val bundle = Bundle().apply { putParcelable(NOTE,alarmModel) }
+                this@MainFragment.findNavController().navigate(R.id.action_mainFragment_to_changeNoteFragment,bundle)
             }
         })
         val layoutManager = LinearLayoutManager(activity)
@@ -60,7 +63,9 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.addAlarmButton.setOnClickListener { toFragment(null,MainActivity.SET_TIME_FRAGMENT) }
+        binding.addAlarmButton.setOnClickListener {
+            view.findNavController().navigate(R.id.action_mainFragment_to_setTimeFragment)
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.getAll().collect { list ->
@@ -99,9 +104,7 @@ class MainFragment : Fragment() {
         alertDialog.show()
     }
 
-    private fun toFragment(alarmModel: AlarmModel?, fragment: String) {
-        val activity = requireActivity() as MainActivity
-        activity.fragmentNavigation(alarmModel,fragment)
+    companion object {
+        const val NOTE = " note"
     }
-
 }

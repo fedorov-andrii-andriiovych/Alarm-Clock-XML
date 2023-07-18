@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentChangeNoteBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
@@ -36,9 +37,11 @@ class ChangeNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val alarmModel = arguments?.getParcelable<AlarmModel>(MainActivity.NOTE)!!
+        val alarmModel = arguments?.getParcelable<AlarmModel>(MainFragment.NOTE)!!
         binding.apply {
-            cancelButton.setOnClickListener { toFragment() }
+            cancelButton.setOnClickListener {
+               toMainScreen()
+            }
             editButton.setOnClickListener { saveChanges(alarmModel) }
             showDatePickerButton.setOnClickListener {
                 isShowDate = !isShowDate
@@ -73,7 +76,7 @@ class ChangeNoteFragment : Fragment() {
         )
         mainViewModel.update(alarmModel = alarmModel)
         val result = setAlarm(alarmModel)
-        if (result) toFragment()
+        if (result) toMainScreen()
     }
 
     private fun setAlarm(alarmModel: AlarmModel): Boolean {
@@ -107,7 +110,7 @@ class ChangeNoteFragment : Fragment() {
         }
     }
 
-    private fun toFragment() {
-        activity?.supportFragmentManager?.popBackStack()
+    private fun toMainScreen() {
+        this.findNavController().navigate(R.id.action_changeNoteFragment_to_mainFragment2)
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_changeNoteFragment"
+            app:destination="@id/changeNoteFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_setTimeFragment"
+            app:destination="@id/setTimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeNoteFragment"
+        android:name="com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.ChangeNoteFragment"
+        android:label="fragment_change_note"
+        tools:layout="@layout/fragment_change_note" >
+        <action
+            android:id="@+id/action_changeNoteFragment_to_mainFragment2"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setTimeFragment"
+        android:name="com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.SetTimeFragment"
+        android:label="fragment_set_time"
+        tools:layout="@layout/fragment_set_time" >
+        <action
+            android:id="@+id/action_setTimeFragment_to_mainFragment2"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>
