@@ -25,35 +25,66 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val id = intent.getIntExtra(AlarmCreator.ID, 0)
         val descriptionIntent = intent.getStringExtra(AlarmCreator.DESCRIPTION)
+
         mediaPlayer = MediaPlayer.create(context, R.raw.zvonok)
         mediaPlayer?.start()
+
+        val pendingIntent = createIntent(context = context, id = id)
+
+        createChanel(context = context)
+
+        createNotification(
+            context = context,
+            descriptionIntent = descriptionIntent,
+            pendingIntent = pendingIntent,
+            id = id
+        )
+    }
+
+    private fun createIntent(context: Context, id: Int): PendingIntent? {
         val fullScreenIntent = Intent(context.applicationContext, MainActivity::class.java)
+        fullScreenIntent.action = "ACTION_CANCEL_NOTIFICATION"
         fullScreenIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val fullScreenPendingIntent = PendingIntent.getActivity(
+        return PendingIntent.getActivity(
             context, id,
             fullScreenIntent, PendingIntent.FLAG_IMMUTABLE
         )
-        val channel =
-            NotificationChannel(
+    }
+
+    private fun createChanel(context: Context) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val existingChannel = notificationManager.getNotificationChannel(CHANEL_ID)
+        if (existingChannel == null) {
+            val channel = NotificationChannel(
                 CHANEL_ID,
                 context.getString(R.string.reminders),
-                NotificationManager.IMPORTANCE_HIGH).apply {
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
                 description = ""
                 enableVibration(true)
                 enableLights(true)
                 setSound(null, null)
                 lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
             }
-        val notificationManager: NotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun createNotification(
+        context: Context,
+        descriptionIntent: String?,
+        pendingIntent: PendingIntent?,
+        id: Int
+    ) {
         val builder = NotificationCompat.Builder(context, CHANEL_ID)
             .setSmallIcon(R.drawable.icon_note)
             .setContentTitle(context.getString(R.string.my_tasks))
             .setContentText(descriptionIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
-            .setFullScreenIntent(fullScreenPendingIntent, true)
+            .setFullScreenIntent(pendingIntent, true)
             .setOnlyAlertOnce(true)
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         with(NotificationManagerCompat.from(context.applicationContext)) {
@@ -67,7 +98,18 @@ class AlarmReceiver : BroadcastReceiver() {
             notify(id, builder.build())
         }
     }
-    companion object{
-       private const val  CHANEL_ID = "1"
+
+
+
+    companion object {
+        private const val CHANEL_ID = "1"
+    }
+
+    inner class NotificationCancelReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent?.action == "ACTION_CANCEL_NOTIFICATION") {
+                mediaPlayer?.stop()
+            }
+        }
     }
 }
