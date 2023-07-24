@@ -12,14 +12,13 @@ import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentChangeNoteBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.AlarmCreator
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.MainActivity
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.AlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangeNoteFragment : Fragment() {
-    private val mainViewModel: MainViewModel by viewModels()
+    private val alarmViewModel: AlarmViewModel by viewModels()
     lateinit var binding: FragmentChangeNoteBinding
     private var isShowDate: Boolean = false
     private var isShowTime: Boolean = false
@@ -39,6 +38,7 @@ class ChangeNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val alarmModel = arguments?.getParcelable<AlarmModel>(MainFragment.NOTE)!!
         binding.apply {
+            timePicker.setIs24HourView(true)
             cancelButton.setOnClickListener {
                toMainScreen()
             }
@@ -74,7 +74,7 @@ class ChangeNoteFragment : Fragment() {
             year = binding.datePicker.year,
             description = binding.descriptionEditText.text.toString()
         )
-        mainViewModel.update(alarmModel = alarmModel)
+        alarmViewModel.update(alarmModel = alarmModel)
         val result = setAlarm(alarmModel)
         if (result) toMainScreen()
     }

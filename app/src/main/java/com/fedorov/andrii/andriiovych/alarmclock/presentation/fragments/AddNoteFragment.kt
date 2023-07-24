@@ -12,14 +12,14 @@ import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentSetTimeBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.AlarmCreator
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.AlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SetTimeFragment : Fragment() {
+class AddNoteFragment : Fragment() {
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private val alarmViewModel: AlarmViewModel by viewModels()
     lateinit var binding: FragmentSetTimeBinding
     private lateinit var alarmModel: AlarmModel
     private var isDatePickerShow = false
@@ -49,7 +49,7 @@ class SetTimeFragment : Fragment() {
                 showDatePickerButton()
             }
         }
-        mainViewModel.alarmId.observe(viewLifecycleOwner) { id ->
+        alarmViewModel.alarmId.observe(viewLifecycleOwner) { id ->
             setAlarm(alarmModel = alarmModel, id = id)
         }
     }
@@ -78,7 +78,7 @@ class SetTimeFragment : Fragment() {
                 .ifEmpty { getString(R.string.new_note) }
         )
         alarmModel = model
-        mainViewModel.insert(alarmModel = model)
+        alarmViewModel.insert(alarmModel = model)
     }
 
     private fun setAlarm(alarmModel: AlarmModel, id: Long) {

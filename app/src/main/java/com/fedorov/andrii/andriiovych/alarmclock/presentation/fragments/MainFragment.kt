@@ -22,11 +22,10 @@ import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.databinding.FragmentMainBinding
 import com.fedorov.andrii.andriiovych.alarmclock.domain.models.AlarmModel
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.AlarmCreator
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.MainActivity
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.AlarmActionListener
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.adapters.MainAdapter
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.broadcast.AlarmReceiver
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.MainViewModel
+import com.fedorov.andrii.andriiovych.alarmclock.presentation.viewmodels.AlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -35,7 +34,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainFragment : Fragment() {
     lateinit var adapter: MainAdapter
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: AlarmViewModel by viewModels()
     lateinit var binding: FragmentMainBinding
     @Inject
     lateinit var alarmCreator: AlarmCreator

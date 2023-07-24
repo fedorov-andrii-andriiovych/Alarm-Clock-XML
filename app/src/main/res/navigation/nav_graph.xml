@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/setTimeFragment"
-        android:name="com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.SetTimeFragment"
+        android:name="com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.AddNoteFragment"
         android:label="fragment_set_time"
         tools:layout="@layout/fragment_set_time" >
         <action

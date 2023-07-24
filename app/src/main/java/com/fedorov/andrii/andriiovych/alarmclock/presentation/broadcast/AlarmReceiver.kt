@@ -9,14 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.MainActivity
 import com.fedorov.andrii.andriiovych.alarmclock.R
 import com.fedorov.andrii.andriiovych.alarmclock.presentation.AlarmCreator
-import com.fedorov.andrii.andriiovych.alarmclock.presentation.fragments.SetTimeFragment
 
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -98,8 +96,6 @@ class AlarmReceiver : BroadcastReceiver() {
             notify(id, builder.build())
         }
     }
-
-
 
     companion object {
         private const val CHANEL_ID = "1"
